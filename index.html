@@ -17,10 +17,47 @@
 <body>
     <header>
         <h1>The Unacknowlegded Dungeon</h1>
+        <a href="./monster-index.html">Monster Index</a>
     </header>
 
     <main>
-        <section class="monsterContainerEl">
+        <section class="playerContainerEl">
+            <p>Skills: <span class="skillsEl">150</span></p>
+            <form>
+                <div>
+                    <label for="playerName">Name:</label>
+                    <input type="text" id="playerName" name="playerName" maxlength="50" size="10" autofocus />
+                </div>
+                <div>
+                    <label for="playerHealth">Health:</label>
+                    <input type="number" id="playerHealth" name="playerHealth" />
+                </div>
+                <div>
+                    <label for="playerAttack">Attack:</label>
+                    <input type="number" id="playerAttack" name="playerAttack" />
+                </div>
+                <div>
+                    <label for="playerDefence">Defence:</label>
+                    <input type="number" id="playerDefence" name="playerDefence" />
+                </div>
+                <div>
+                    <label for="playerDescription">Description:</label>
+                    <input type="text" id="playerDescription" name="playerDescription" size="10" />
+                </div>
+
+                <input type="submit" onclick="start()" value="Create player">
+            </form>
+
+        </section>
+        <section class="battleArea">
+            <article class="playerFighterEl">
+
+
+            </article>
+            <article class="monsterFighterEl">
+
+
+            </article>
             <!-- <article class="monsterCard">
                 <h3 class="monsterNameEl">Navn</h3>
                 <h4>Level: <span class="monsterLvLEl">xx</span></h4>
@@ -30,8 +67,12 @@
                 </div>
                 <p class="monsterDescriptionEl">Description</p>
             </article> -->
-        </section>
 
+            <button onclick="fight()">Fight</button>
+            <p>-----</p>
+            <button onclick="reset()">Restart</button>
+
+        </section>
     </main>
 
     <footer>

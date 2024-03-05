@@ -53,10 +53,12 @@ body {
 
 main {
     display: grid;
-    grid-template-columns: var(--standardSpacing) repeat (4, 1fr) var(--standardSpacing);
+    grid-template-columns: var(--standardSpacing) repeat(4, 1fr) var(--standardSpacing);
 }
 
-section {}
+section {
+    grid-column: 2/-2;
+}
 
 article {}
 
@@ -94,7 +96,7 @@ h2 {
 h3 {
     font-size: 1rem;
     margin: 0px;
-    color: var(--secondaryColor);
+    color: var(--accentColor);
 }
 
 p {
@@ -113,4 +115,30 @@ a .btn {
 a .btn:hover {
     background: var(--hoverButtonColor);
     transform: scale(1.1);
+}
+
+button {
+    grid-column: 2/-2;
+}
+
+/* --- CONTAINERS --- */
+.monsterContainerEl {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--largeSpacing);
+}
+
+/* --- CARDS --- */
+.monsterCard {
+    background: var(--secondaryColor);
+    padding: var(--mediumSpacing);
+    border-radius: var(--borderRadius);
+    box-shadow: var(--shadow);
+    width: 300px;
+    margin: var(--standardSpacing) 0;
+}
+
+.monsterCard .monsterStats {
+    display: flex;
+    gap: var(--standardSpacing);
 }
