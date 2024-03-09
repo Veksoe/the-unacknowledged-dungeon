@@ -3,6 +3,7 @@ const monsterFighterEl = document.querySelector(".monsterFighterEl");
 const monsterContainerEl = document.querySelector(".monsterContainerEl");
 const battleAreaEl = document.querySelector(".battleArea");
 const playerContainerEl = document.querySelector(".playerContainerEl");
+const playerFighterEl = document.querySelector(".playerFighterEl");
 const formEl = document.querySelector("form");
 
 let monsters = [];
@@ -18,9 +19,20 @@ function generateMonsterHTML(monster) {
     <p class="monsterDescriptionEl">Description</p>
     <p>Defence: <span class="monsterAttackEl">${monster.defence}</span></p>
     <p>Exp: <span class="monsterAttackEl">${monster.exp}</span></p>
-
     </article>`;
+}
 
+function generatePlayerHTML(player) {
+    return ` <div class="playerCard">
+    <h3 class="playerNameEl">${player.name}</h3>
+   <h4>Level: <span class="playerLvLEl">${player.lvl}</span></h4>
+    <div class="playerStats">
+        <p>Health: <span class="playerHealthEl">${player.health}</span></p>
+        <p>Attack: <span class="playerAttackEl">${player.attack}</span></p>
+    </div>
+    <p class="playerDescriptionEl">${player.description}</p>
+     <p>Defence: <span class="playerDefenceEl">${player.defence}</span></p>
+</div>`;
 }
 
 function buildMonster() {
@@ -47,16 +59,16 @@ function buildMonster() {
     monster.exp = Math.floor((Math.random() * 10) * expScalar) + 1;
 
     monsterFighterEl.innerHTML = generateMonsterHTML(monster);
+    localStorage.setItem("currentMonster", JSON.stringify(monster))
     monsters.push(monster);
-
 }
 
 function start() {
     battleAreaEl.style.display = "block";
     playerContainerEl.style.display = "none";
     formEl.addEventListener("submit", createPlayer)
-
 }
+
 function fight() {
     if (localStorage.getItem("monster")) {
         monsters = JSON.parse(localStorage.getItem("monster"));
@@ -68,58 +80,73 @@ function fight() {
 
 function reset() {
     localStorage.clear();
-    console.log("Game reset");
     battleAreaEl.style.display = "none";
     playerContainerEl.style.display = "block";
 }
+
 function createPlayer(event) {
     event.preventDefault();
-    const playerName = formEl.playerName.value;
-    const playerHealth = formEl.playerHealth.value;
-    const playerAttack = formEl.playerAttack.value;
-    const playerDefence = formEl.playerDefence.value;
-    const playerDescription = formEl.playerDescription.value;
+    const name = formEl.playerName.value;
+    const health = formEl.playerHealth.value;
+    const attack = formEl.playerAttack.value;
+    const defence = formEl.playerDefence.value;
+    const description = formEl.playerDescription.value;
 
-    const playerNameEl = localStorage.getItem("playerName");
-    const playerHealthEl = localStorage.getItem("playerHealth");
-    const playerAttackEl = localStorage.getItem("playerAttack");
-    const playerDefenceEl = localStorage.getItem("playerDefence");
-    const playerDescriptionEl = localStorage.getItem("playerDescription");
+    const player = {
+        name,
+        attack,
+        health,
+        defence,
+        description,
+        exp: 0,
+        lvl: 1
+    }
 
-    localStorage.setItem("playerName", playerName);
-    localStorage.setItem("playerHealth", playerHealth);
-    localStorage.setItem("playerAttack", playerAttack);
-    localStorage.setItem("playerDefence", playerDefence);
-    localStorage.setItem("playerDecription", JSON.stringify(playerDescription));
+    localStorage.setItem("player", JSON.stringify(player));
 
     const playerFighterEl = document.querySelector(".playerFighterEl");
 
     playerFighterEl.innerHTML = `
     <div class="playerCard">
-    <h3 class="playerNameEl">${playerNameEl}</h3>
-    <h4>Level: <span class="playerLvLEl">1</span></h4>
-    <div class="playerStats">
-        <p>Health: <span class="playerHealthEl">${playerHealthEl}</span></p>
-        <p>Attack: <span class="playerAttackEl">${playerAttackEl}</span></p>
-    </div>
-    <p class="playerDescriptionEl">${playerDescriptionEl}</p>
-    <p>Defence: <span class="playerDefenceEl">${JSON.parse(playerDefenceEl)}</span></p>
-
-</div>`
+         <h3 class="playerNameEl">${player.name}</h3>
+        <h4>Level: <span class="playerLvLEl">${player.lvl}</span></h4>
+         <div class="playerStats">
+             <p>Health: <span class="playerHealthEl">${player.health}</span></p>
+             <p>Attack: <span class="playerAttackEl">${player.attack}</span></p>
+         </div>
+         <p class="playerDescriptionEl">${player.description}</p>
+          <p>Defence: <span class="playerDefenceEl">${player.defence}</span></p>
+    </div>`
 }
 
-if (monsterFighterEl) {
-    if (localStorage.getItem("monster")) {
-        monsters = JSON.parse(localStorage.getItem("monster"));
-    }
-    if (monsters && monsters.length > 0) {
 
-        battleAreaEl.style.display = "block";
+if (battleAreaEl) {
+
+    let currentMonster = JSON.parse(localStorage.getItem("currentMonster"));;
+
+    if (localStorage.getItem("player")) {
+        player = JSON.parse(localStorage.getItem("player"));
+        playerFighterEl.innerHTML += generatePlayerHTML(player);
+
         playerContainerEl.style.display = "none";
     }
-    else {
+
+    if (localStorage.getItem("currentMonster")) {
+        monsters = JSON.parse(localStorage.getItem("currentMonster"));
+        monsterFighterEl.innerHTML += generateMonsterHTML(currentMonster);
+    }
+    if (player && player.length > 0) {
         battleAreaEl.style.display = "none";
-        playerContainerEl.style.display = "block";
+    }
+
+    if (monsters && monsters.length > 0) {
+
+        monsterFighterEl.style.display = "none";
+
+    }
+    else {
+
+        monsterFighterEl.style.display = "block";
     }
 }
 
@@ -131,8 +158,3 @@ if (monsterContainerEl) {
         monsterContainerEl.innerHTML += generateMonsterHTML(monster);
     })
 }
-
-
-
-
-// localStorage.setItem("name", JSON.stringify(playerName));
