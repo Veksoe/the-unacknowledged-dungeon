@@ -17,12 +17,15 @@
 <body>
     <header>
         <h1>The Unacknowlegded Dungeon</h1>
-        <a href="./monster-index.html">Monster Index</a>
+        <nav>
+
+            <a href="./monster-index.html">Monster Index</a>
+        </nav>
     </header>
 
     <main>
         <section class="playerContainerEl">
-            <p>Skills: <span class="skillsEl">150</span></p>
+            <p>Skills: <span class="skillsEl" id="skillLeft">150</span></p>
             <form>
                 <div>
                     <label for="playerName">Name:</label>
@@ -30,15 +33,15 @@
                 </div>
                 <div>
                     <label for="playerHealth">Health:</label>
-                    <input type="number" id="playerHealth" name="playerHealth" min="0" />
+                    <input type="number" id="playerHealth" name="playerHealth" min="0" oninput="countSkills(event)" />
                 </div>
                 <div>
                     <label for="playerAttack">Attack:</label>
-                    <input type="number" id="playerAttack" name="playerAttack" min="0" />
+                    <input type="number" id="playerAttack" name="playerAttack" min="0" oninput="countSkills(event)" />
                 </div>
                 <div>
                     <label for="playerDefence">Defence:</label>
-                    <input type="number" id="playerDefence" name="playerDefence" min="0" />
+                    <input type="number" id="playerDefence" name="playerDefence" min="0" oninput="countSkills(event)" />
                 </div>
                 <div>
                     <label for="playerDescription">Description:</label>

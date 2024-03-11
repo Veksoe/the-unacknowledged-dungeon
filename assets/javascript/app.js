@@ -5,8 +5,19 @@ const battleAreaEl = document.querySelector(".battleArea");
 const playerContainerEl = document.querySelector(".playerContainerEl");
 const playerFighterEl = document.querySelector(".playerFighterEl");
 const formEl = document.querySelector("form");
+const navEl = document.querySelector("nav");
 
 let monsters = [];
+let skillPointsLeft = 150;
+let player = {
+    name: "",
+    attack: 0,
+    health: 0,
+    defence: 0,
+    description: "",
+    exp: 0,
+    lvl: 1
+}
 
 function generateMonsterHTML(monster) {
     return `<article class="monsterCard">
@@ -22,7 +33,7 @@ function generateMonsterHTML(monster) {
     </article>`;
 }
 
-function generatePlayerHTML(player) {
+function generatePlayerHTML() {
     return ` <div class="playerCard">
     <h3 class="playerNameEl">${player.name}</h3>
    <h4>Level: <span class="playerLvLEl">${player.lvl}</span></h4>
@@ -33,6 +44,44 @@ function generatePlayerHTML(player) {
     <p class="playerDescriptionEl">${player.description}</p>
      <p>Defence: <span class="playerDefenceEl">${player.defence}</span></p>
 </div>`;
+}
+
+function countSkills(e) {
+    if (!player) {
+        player = {
+            name: "",
+            attack: 0,
+            health: 0,
+            defence: 0,
+            description: "",
+            exp: 0,
+            lvl: 1
+        }
+    }
+
+    const name = e.srcElement.id.replace("player", "").toLowerCase();
+    const currentValue = e.srcElement.value;
+
+    const delta = currentValue - player[name];
+
+    if (currentValue < 0) {
+        e.preventDefault();
+        e.srcElement.value = player[name]
+        return
+    }
+
+    if (skillPointsLeft - delta < 0) {
+        e.preventDefault();
+        e.srcElement.value = player[name]
+        return
+    }
+
+    skillPointsLeft -= delta;
+    player[name] = currentValue;
+
+    document.querySelector("#skillLeft").innerHTML = skillPointsLeft;
+
+    console.log("Name: " + name + " value: " + e.srcElement.value + " left: " + skillPointsLeft)
 }
 
 function buildMonster() {
@@ -76,12 +125,14 @@ function fight() {
     buildMonster();
     console.table([monsters]);
     localStorage.setItem("monster", JSON.stringify(monsters))
+    navEl.style.display = "block";
 }
 
 function reset() {
     localStorage.clear();
     battleAreaEl.style.display = "none";
     playerContainerEl.style.display = "block";
+    navEl.style.display = "none";
 }
 
 function createPlayer(event) {
@@ -92,7 +143,7 @@ function createPlayer(event) {
     const defence = formEl.playerDefence.value;
     const description = formEl.playerDescription.value;
 
-    const player = {
+    player = {
         name,
         attack,
         health,
@@ -121,36 +172,40 @@ function createPlayer(event) {
 
 
 if (battleAreaEl) {
+    // Only runs on page load
+    const currentMonster = JSON.parse(localStorage.getItem("currentMonster"));;
+    player = JSON.parse(localStorage.getItem("player"));
 
-    let currentMonster = JSON.parse(localStorage.getItem("currentMonster"));;
-
-    if (localStorage.getItem("player")) {
-        player = JSON.parse(localStorage.getItem("player"));
+    if (player) {
         playerFighterEl.innerHTML += generatePlayerHTML(player);
-
         playerContainerEl.style.display = "none";
     }
 
-    if (localStorage.getItem("currentMonster")) {
+    if (currentMonster) {
         monsters = JSON.parse(localStorage.getItem("currentMonster"));
         monsterFighterEl.innerHTML += generateMonsterHTML(currentMonster);
     }
-    if (player && player.length > 0) {
+
+    if (!player) {
         battleAreaEl.style.display = "none";
     }
 
+    if (currentMonster) {
+        monsterFighterEl.style.display = "block";
+    }
+
     if (monsters && monsters.length > 0) {
-
-        monsterFighterEl.style.display = "none";
-
+        navEl.style.display = "block";
     }
     else {
-
-        monsterFighterEl.style.display = "block";
+        navEl.style.display = "none";
     }
 }
 
+
+
 if (monsterContainerEl) {
+    // Only runs on page load
     if (localStorage.getItem("monster")) {
         monsters = JSON.parse(localStorage.getItem("monster"));
     }
