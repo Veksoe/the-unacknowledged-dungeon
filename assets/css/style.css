@@ -162,6 +162,10 @@ button {
     display: grid;
 }
 
+.playerContainerEl {
+    display: grid;
+}
+
 .cardContainer {
     column-gap: var(--xLargeSpacing);
 }
