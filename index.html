@@ -18,58 +18,56 @@
     <header>
         <h1>The Unacknowlegded Dungeon</h1>
         <nav>
-
             <a href="./monster-index.html">Monster Index</a>
         </nav>
     </header>
 
     <main>
         <section class="playerContainerEl">
-            <p>Skills: <span class="skillsEl" id="skillLeft">150</span></p>
+            <p>Skills: <span class="skillsEl" id="skillLeft">70</span></p>
             <form>
                 <div>
                     <label for="playerName">Name:</label>
-                    <input type="text" id="playerName" name="playerName" maxlength="50" size="10" autofocus />
+                    <input type="text" id="playerName" name="playerName" maxlength="50" size="10"
+                        value="Cool Testing Name" autofocus />
                 </div>
                 <div>
                     <label for="playerHealth">Health:</label>
-                    <input type="number" id="playerHealth" name="playerHealth" min="0" oninput="countSkills(event)" />
+                    <input type="number" id="playerHealth" name="playerHealth" min="0" value="60"
+                        oninput="countSkills(event)" />
                 </div>
                 <div>
                     <label for="playerAttack">Attack:</label>
-                    <input type="number" id="playerAttack" name="playerAttack" min="0" oninput="countSkills(event)" />
+                    <input type="number" id="playerAttack" name="playerAttack" min="0" value="6"
+                        oninput="countSkills(event)" />
                 </div>
                 <div>
                     <label for="playerDefence">Defence:</label>
-                    <input type="number" id="playerDefence" name="playerDefence" min="0" oninput="countSkills(event)" />
+                    <input type="number" id="playerDefence" name="playerDefence" min="0" value="4"
+                        oninput="countSkills(event)" />
                 </div>
                 <div>
                     <label for="playerDescription">Description:</label>
-                    <input type="text" id="playerDescription" name="playerDescription" size="10" />
+                    <input type="text" id="playerDescription" name="playerDescription" size="10"
+                        value="This is a placeholder description to make testing easier, that just allow for some content to the card, 
+                        so it doesn't seem so empty. It also gives an idea of the card's design. This should most diffently be removed later!" />
                 </div>
 
                 <input type="submit" onclick="start()" value="Create player">
             </form>
 
         </section>
-        <section class="battleArea">
-            <article class=" playerFighterEl">
+        <section class="battleArea justifyCenter">
+            <div class="cardContainer flex justifyBetween flexWrap">
+                <article class=" playerFighterEl">
 
 
-            </article>
-            <article class="monsterFighterEl">
+                </article>
+                <article class="monsterFighterEl">
 
 
-            </article>
-            <!-- <article class="monsterCard">
-                <h3 class="monsterNameEl">Navn</h3>
-                <h4>Level: <span class="monsterLvLEl">xx</span></h4>
-                <div class="monsterStats">
-                    <p>Health: <span class="monsterHealthEl">xx</span></p>
-                    <p>Attack: <span class="monsterAttackEl">xx</span></p>
-                </div>
-                <p class="monsterDescriptionEl">Description</p>
-            </article> -->
+                </article>
+            </div>
 
             <button onclick="fight()">Fight</button>
             <p>-----</p>

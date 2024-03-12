@@ -8,7 +8,7 @@ const formEl = document.querySelector("form");
 const navEl = document.querySelector("nav");
 
 let monsters = [];
-let skillPointsLeft = 150;
+let skillPointsLeft = 70;
 let player = {
     name: "",
     attack: 0,
@@ -20,29 +20,30 @@ let player = {
 }
 
 function generateMonsterHTML(monster) {
-    return `<article class="monsterCard">
+    return `<article class="monsterCard card">
     <h3 class="monsterNameEl">${monster.name}</h3>
     <h4>Level: <span class="monsterLvLEl">${monster.lvl}</span></h4>
-    <div class="monsterStats">
+    <div class="stats justifyCenter">
         <p>Health: <span class="monsterHealthEl">${monster.health}</span></p>
         <p>Attack: <span class="monsterAttackEl">${monster.attack}</span></p>
+        <p>Defence: <span class="monsterAttackEl">${monster.defence}</span></p>
         </div>
-    <p class="monsterDescriptionEl">Description</p>
-    <p>Defence: <span class="monsterAttackEl">${monster.defence}</span></p>
+    <p class="monsterDescriptionEl">This is a placeholder description for monsters, that just allow for some content to the card, 
+    so it doesn't seem so empty. It also gives an idea of the card's design. This should most diffently be removed later!</p>
     <p>Exp: <span class="monsterAttackEl">${monster.exp}</span></p>
     </article>`;
 }
 
 function generatePlayerHTML() {
-    return ` <div class="playerCard">
+    return ` <div class="playerCard card">
     <h3 class="playerNameEl">${player.name}</h3>
    <h4>Level: <span class="playerLvLEl">${player.lvl}</span></h4>
-    <div class="playerStats">
+    <div class="stats justifyCenter">
         <p>Health: <span class="playerHealthEl">${player.health}</span></p>
         <p>Attack: <span class="playerAttackEl">${player.attack}</span></p>
+        <p>Defence: <span class="playerDefenceEl">${player.defence}</span></p>
     </div>
     <p class="playerDescriptionEl">${player.description}</p>
-     <p>Defence: <span class="playerDefenceEl">${player.defence}</span></p>
 </div>`;
 }
 
@@ -81,7 +82,7 @@ function countSkills(e) {
 
     document.querySelector("#skillLeft").innerHTML = skillPointsLeft;
 
-    console.log("Name: " + name + " value: " + e.srcElement.value + " left: " + skillPointsLeft)
+    // console.log("Name: " + name + " value: " + e.srcElement.value + " left: " + skillPointsLeft)
 }
 
 function buildMonster() {
@@ -91,6 +92,7 @@ function buildMonster() {
         health: null,
         attack: null,
         defence: null,
+        description: null,
         exp: null,
     }
 
@@ -113,9 +115,11 @@ function buildMonster() {
 }
 
 function start() {
-    battleAreaEl.style.display = "block";
+    battleAreaEl.style.display = "grid";
     playerContainerEl.style.display = "none";
     formEl.addEventListener("submit", createPlayer)
+
+
 }
 
 function fight() {
@@ -123,16 +127,14 @@ function fight() {
         monsters = JSON.parse(localStorage.getItem("monster"));
     }
     buildMonster();
-    console.table([monsters]);
+    // console.table([monsters]);
     localStorage.setItem("monster", JSON.stringify(monsters))
     navEl.style.display = "block";
 }
 
 function reset() {
     localStorage.clear();
-    battleAreaEl.style.display = "none";
-    playerContainerEl.style.display = "block";
-    navEl.style.display = "none";
+    window.location.reload();
 }
 
 function createPlayer(event) {
@@ -157,17 +159,8 @@ function createPlayer(event) {
 
     const playerFighterEl = document.querySelector(".playerFighterEl");
 
-    playerFighterEl.innerHTML = `
-    <div class="playerCard">
-         <h3 class="playerNameEl">${player.name}</h3>
-        <h4>Level: <span class="playerLvLEl">${player.lvl}</span></h4>
-         <div class="playerStats">
-             <p>Health: <span class="playerHealthEl">${player.health}</span></p>
-             <p>Attack: <span class="playerAttackEl">${player.attack}</span></p>
-         </div>
-         <p class="playerDescriptionEl">${player.description}</p>
-          <p>Defence: <span class="playerDefenceEl">${player.defence}</span></p>
-    </div>`
+    playerFighterEl.innerHTML += generatePlayerHTML(player);
+
 }
 
 
@@ -199,6 +192,7 @@ if (battleAreaEl) {
     }
     else {
         navEl.style.display = "none";
+
     }
 }
 

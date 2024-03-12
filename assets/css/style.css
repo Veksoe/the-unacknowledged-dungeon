@@ -14,6 +14,9 @@
     --disableButtonColor: silver;
     --backgroundColor: whiteSmoke;
     --baseTextDarkColor: black;
+    --baseTextLightColor: white;
+    --playerBackground: rgb(86, 199, 86);
+    --monsterBackground: rgb(180, 62, 62);
 
 
 
@@ -29,7 +32,7 @@
     --xLargeSpacing: 50px;
 
     /* DETAILS */
-    --borderRadius: 3px;
+    --borderRadius: 25px;
     --round: 50%;
     --shadow: 3px 3px 8px gray;
 }
@@ -45,6 +48,28 @@
     grid-column: 1/-1;
 }
 
+.flex {
+    display: flex;
+}
+
+.justifyBetween {
+    justify-content: space-between;
+}
+
+.justifyCenter {
+    justify-content: center;
+}
+
+.flexWrap {
+    flex-wrap: wrap;
+}
+
+.hidden {
+    display: none;
+}
+
+
+
 /* --- GENERALS --- */
 
 body {
@@ -53,7 +78,7 @@ body {
 
 main {
     display: grid;
-    grid-template-columns: var(--standardSpacing) repeat(4, 1fr) var(--standardSpacing);
+    grid-template-columns: var(--largeSpacing) repeat(4, 1fr) var(--largeSpacing);
 }
 
 section {
@@ -105,16 +130,21 @@ p {
 }
 
 /* --- BUTTONS --- */
-a .btn {
+a .btn,
+button {
     background: var(--interactableColor);
     padding: var(--standardSpacing) var(--mediumSpacing);
     text-decoration: none;
     text-transform: uppercase;
+    color: var(--baseTextLightColor);
+    font-weight: bold;
 }
 
-a .btn:hover {
+a .btn:hover,
+button:hover {
     background: var(--hoverButtonColor);
-    transform: scale(1.1);
+    transform: scale(1.04);
+    transition: .2s;
 }
 
 button {
@@ -123,22 +153,43 @@ button {
 
 /* --- CONTAINERS --- */
 .monsterContainerEl {
-    display: flex;
-    flex-wrap: wrap;
+
     column-gap: var(--largeSpacing);
 }
 
+.battleArea {
+    margin: 0 15%;
+    display: grid;
+}
+
+.cardContainer {
+    column-gap: var(--xLargeSpacing);
+}
+
 /* --- CARDS --- */
-.monsterCard {
-    background: var(--secondaryColor);
+
+.card {
     padding: var(--mediumSpacing);
     border-radius: var(--borderRadius);
     box-shadow: var(--shadow);
-    width: 300px;
+    width: 360px;
     margin: var(--standardSpacing) 0;
+    height: 400px;
 }
 
-.monsterCard .monsterStats {
+.stats {
     display: flex;
     gap: var(--standardSpacing);
+}
+
+.monsterCard {
+    background: var(--monsterBackground);
+
+}
+
+
+
+.playerCard {
+    background: var(--playerBackground);
+
 }
